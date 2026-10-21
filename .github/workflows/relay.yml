@@ -16,10 +16,12 @@ jobs:
           mkdir -p assets
           gdown 1byGeYxM_PlLjT72wZsMQvP6popJeWBgt -O assets/cifar10_res18_v1.5.zip
           gdown 1lI1j0_fDDvjIt9JlWAw09X8ks-yrR_H1 -O assets/benchmark_imglist.zip
+          gdown 1nVObxjUBmVpZ6M0PPlcspsMMYHidUMfa -O assets/fashionmnist.zip
           ls -la assets
           sha256sum assets/* | tee assets/SHA256SUMS.txt
       - name: Create release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          gh release delete v1 -y || true
           gh release create v1 assets/* --repo "$GITHUB_REPOSITORY" --title "relay v1" --notes "temporary relay"
